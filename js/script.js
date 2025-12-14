@@ -144,7 +144,7 @@ function calcularGrupoB() {
     const geracaoNecessaria = consumoCompensavel * 1.1; // 10% de margem
     
     // Potência necessária (kWp)
-    const potenciaKwp = (geracaoNecessaria * 1000) / (CONFIG.fatorIrradiacao * (CONFIG.eficienciaSistema / 100));
+    const potenciaKwp = geracaoNecessaria / (CONFIG.fatorIrradiacao * (CONFIG.eficienciaSistema / 100));
     
     // Quantidade de placas
     const quantidadePlacas = Math.ceil((potenciaKwp * 1000) / CONFIG.potenciaPlaca);
@@ -212,7 +212,7 @@ function calcularGrupoA() {
     const geracaoNecessaria = consumoTotal * 1.1;
     
     // Potência necessária (kWp)
-    const potenciaKwp = (geracaoNecessaria * 1000) / (CONFIG.fatorIrradiacao * (CONFIG.eficienciaSistema / 100));
+    const potenciaKwp = geracaoNecessaria / (CONFIG.fatorIrradiacao * (CONFIG.eficienciaSistema / 100));
     
     // Quantidade de placas
     const quantidadePlacas = Math.ceil((potenciaKwp * 1000) / CONFIG.potenciaPlaca);
@@ -385,4 +385,4 @@ if (typeof window !== 'undefined') {
         await carregarConfiguracoesGlobais();
     });
 }
-
+
