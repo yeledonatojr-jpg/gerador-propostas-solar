@@ -3,231 +3,570 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌞 Gerador de Propostas Solar</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="css/print.css" media="print">
+    <title>🌞 Gerador de Propostas Solar - VOLTTAIC Style</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+            
+            .page-break {
+                page-break-before: always;
+            }
+            
+            .container-print {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <header class="header no-print">
-            <h1>🌞 Gerador de Propostas Solar</h1>
-            <a href="config.html" class="btn-config">⚙️ Configurações</a>
-        </header>
+<body class="bg-gray-50">
+    <!-- Formulário de Entrada (Oculto na impressão) -->
+    <div class="no-print">
+        <div class="max-w-7xl mx-auto px-4 py-8">
+            <!-- Cabeçalho -->
+            <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg shadow-lg p-8 mb-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-4xl font-bold mb-2">🌞 Gerador de Propostas Solar</h1>
+                        <p class="text-blue-100 text-lg">Sistema profissional de dimensionamento e cálculo financeiro</p>
+                    </div>
+                    <a href="config.html" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition">
+                        ⚙️ Configurações
+                    </a>
+                </div>
+            </div>
 
-        <main>
-            <section class="section dados-cliente">
-                <h2>📋 Dados do Cliente</h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="nome-cliente">Nome do Cliente: *</label>
-                        <input type="text" id="nome-cliente" required>
+            <!-- Status de Conexão Supabase -->
+            <div id="supabase-status" class="p-3 rounded-lg border bg-yellow-100 text-yellow-800 border-yellow-300 mb-4">
+                ⚠️ Inicializando conexão com Supabase...
+            </div>
+
+            <!-- Dados do Cliente -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="mr-2">📋</span> Dados do Cliente
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Nome do Cliente *</label>
+                        <input type="text" id="nome-cliente" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
                     </div>
-                    <div class="form-group">
-                        <label for="empresa-cliente">Empresa:</label>
-                        <input type="text" id="empresa-cliente">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Empresa</label>
+                        <input type="text" id="empresa-cliente" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
-                    <div class="form-group">
-                        <label for="cpf-cnpj">CPF/CNPJ:</label>
-                        <input type="text" id="cpf-cnpj">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">CPF/CNPJ</label>
+                        <input type="text" id="cpf-cnpj" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
-                    <div class="form-group">
-                        <label for="telefone-cliente">Telefone:</label>
-                        <input type="tel" id="telefone-cliente">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Telefone</label>
+                        <input type="tel" id="telefone-cliente" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
-                    <div class="form-group">
-                        <label for="representante">Representante:</label>
-                        <input type="text" id="representante">
-                    </div>
-                    <div class="form-group">
-                        <label for="data-proposta">Data da Proposta:</label>
-                        <input type="date" id="data-proposta">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">E-mail</label>
+                        <input type="email" id="email-cliente" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section class="section grupo-tarifario">
-                <h2>⚡ Grupo Tarifário</h2>
-                <div class="form-group">
-                    <label for="grupo-tarifario">Selecione o Grupo:</label>
-                    <select id="grupo-tarifario" onchange="alternarCamposGrupo()">
+            <!-- Grupo Tarifário -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="mr-2">⚡</span> Grupo Tarifário
+                </h2>
+                <div class="mb-4">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Selecione o Grupo</label>
+                    <select id="grupo-tarifario" class="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" onchange="alternarCamposGrupo()">
                         <option value="B">Grupo B - Residencial/Comercial</option>
                         <option value="B-Optante">Grupo B - Optante</option>
                         <option value="A">Grupo A - Consumidor Industrial</option>
                     </select>
                 </div>
 
-                <div id="campos-grupo-b" class="campos-tarifarios">
-                    <h3>Consumo e Tarifas</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="consumo-total">Consumo Total Mensal (kWh): *</label>
-                            <input type="number" id="consumo-total" step="0.01" min="0">
+                <!-- Campos Grupo B -->
+                <div id="campos-grupo-b">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 mt-6">Consumo e Tarifas</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Consumo Total Mensal (kWh) *</label>
+                            <input type="number" id="consumo-total" step="0.01" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="tarifa-consumo">Tarifa de Consumo (R$/kWh): *</label>
-                            <input type="number" id="tarifa-consumo" step="0.0001" min="0" value="0.95">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tarifa de Consumo (R$/kWh) *</label>
+                            <input type="number" id="tarifa-consumo" step="0.0001" min="0" value="0.95" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="custo-iluminacao">Custo de Iluminação Pública (R$):</label>
-                            <input type="number" id="custo-iluminacao" step="0.01" min="0" value="0">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Custo de Iluminação Pública (R$)</label>
+                            <input type="number" id="custo-iluminacao" step="0.01" min="0" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                     </div>
                 </div>
 
-                <div id="campos-grupo-a" class="campos-tarifarios" style="display: none;">
-                    <h3>⚡ Consumo por Horário</h3>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="consumo-ponta">Consumo Ponta (kWh): *</label>
-                            <input type="number" id="consumo-ponta" step="0.01" min="0">
+                <!-- Campos Grupo A -->
+                <div id="campos-grupo-a" style="display: none;">
+                    <h3 class="text-lg font-semibold text-gray-700 mb-4 mt-6">⚡ Consumo por Horário</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Consumo Ponta (kWh) *</label>
+                            <input type="number" id="consumo-ponta" step="0.01" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="tarifa-ponta">Tarifa Ponta (R$/kWh): *</label>
-                            <input type="number" id="tarifa-ponta" step="0.0001" min="0" value="1.25">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tarifa Ponta (R$/kWh) *</label>
+                            <input type="number" id="tarifa-ponta" step="0.0001" min="0" value="1.25" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="consumo-fora-ponta">Consumo Fora Ponta (kWh): *</label>
-                            <input type="number" id="consumo-fora-ponta" step="0.01" min="0">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Consumo Fora Ponta (kWh) *</label>
+                            <input type="number" id="consumo-fora-ponta" step="0.01" min="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="tarifa-fora-ponta">Tarifa Fora Ponta (R$/kWh): *</label>
-                            <input type="number" id="tarifa-fora-ponta" step="0.0001" min="0" value="0.65">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tarifa Fora Ponta (R$/kWh) *</label>
+                            <input type="number" id="tarifa-fora-ponta" step="0.0001" min="0" value="0.65" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="demanda-contratada">Demanda Contratada (kW):</label>
-                            <input type="number" id="demanda-contratada" step="0.01" min="0" value="0">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Demanda Contratada (kW)</label>
+                            <input type="number" id="demanda-contratada" step="0.01" min="0" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
-                        <div class="form-group">
-                            <label for="tarifa-demanda">Tarifa de Demanda (R$/kW):</label>
-                            <input type="number" id="tarifa-demanda" step="0.01" min="0" value="0">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tarifa de Demanda (R$/kW)</label>
+                            <input type="number" id="tarifa-demanda" step="0.01" min="0" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <section class="section especificacoes">
-                <h2>🔧 Especificações do Sistema</h2>
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="modelo-inversor">Modelo do Inversor:</label>
-                        <input type="text" id="modelo-inversor" placeholder="Ex: Growatt 5K">
-                    </div>
-                    <div class="form-group">
-                        <label for="tipo-estrutura">Tipo de Estrutura:</label>
-                        <select id="tipo-estrutura">
-                            <option value="Fibrocimento">Fibrocimento</option>
-                            <option value="Metálico">Metálico</option>
-                            <option value="Laje">Laje</option>
-                            <option value="Solo">Solo</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="outros-valores">Outros Valores (R$):</label>
-                        <input type="number" id="outros-valores" step="0.01" min="0" value="0">
-                    </div>
-                </div>
-            </section>
-
-            <section class="section desconto no-print">
-                <h2>💰 Desconto</h2>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="aplicar-desconto" onchange="toggleDesconto()">
-                        Aplicar Desconto
-                    </label>
-                </div>
-                <div id="campo-desconto" style="display: none;">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="percentual-desconto">Desconto Percentual (%):</label>
-                            <input type="number" id="percentual-desconto" step="0.01" min="0" max="100" value="0">
-                        </div>
-                        <div class="form-group">
-                            <label for="valor-desconto-fixo">Desconto Fixo (R$):</label>
-                            <input type="number" id="valor-desconto-fixo" step="0.01" min="0" value="0">
-                        </div>
-                    </div>
-                    <small class="nota">Prioridade: Valor fixo > Percentual</small>
-                </div>
-            </section>
-
-            <div class="action-buttons no-print">
-                <button class="btn btn-primary" onclick="calcularProposta()">🧮 Calcular Proposta</button>
-                <button class="btn btn-secondary" onclick="novaProposta()">🔄 Nova Proposta</button>
             </div>
 
-            <section id="visao-geral-resultados" style="display: none;">
-                <h2>📊 Resultados</h2>
-                <div class="card-container">
-                    <div class="card investimento-total">
-                        <span class="card-icon">💰</span>
-                        <h3>Investimento Total</h3>
-                        <p id="res-investimento" class="valor-principal">R$ 0,00</p>
-                        <small id="nota-investimento" class="nota">Kit Usina + Instalação</small>
-                    </div>
-                    <div class="card economia-mensal">
-                        <span class="card-icon">⚡</span>
-                        <h3>Economia Mensal</h3>
-                        <p id="res-economia-mensal" class="valor-principal">R$ 0,00</p>
-                        <small class="nota">Média estimada</small>
-                    </div>
-                    <div class="card economia-percentual">
-                        <span class="card-icon">📈</span>
-                        <h3>Percentual de Economia</h3>
-                        <p id="res-percentual-economia" class="valor-principal">0%</p>
-                        <small class="nota">Em relação ao gasto atual</small>
-                    </div>
-                    <div class="card payback-estimado">
-                        <span class="card-icon">⏳</span>
-                        <h3>Payback</h3>
-                        <p id="res-payback" class="valor-principal">0 Anos</p>
-                        <small class="nota">Retorno do investimento</small>
+            <!-- Outros Valores -->
+            <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                    <span class="mr-2">💰</span> Custos Adicionais
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">Outros Valores (R$)</label>
+                        <input type="number" id="outros-valores" step="0.01" min="0" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <p class="text-sm text-gray-500 mt-1">Ex: custos extras de instalação, adaptações, etc.</p>
                     </div>
                 </div>
+            </div>
 
-                <section class="section detalhes-tecnicos">
-                    <h3>🔍 Detalhes Técnicos</h3>
-                    <div class="detalhes-grid">
-                        <div class="detalhe-item">
-                            <span class="detalhe-label">Potência do Sistema:</span>
-                            <span id="det-potencia" class="detalhe-valor">0 kWp</span>
-                        </div>
-                        <div class="detalhe-item">
-                            <span class="detalhe-label">Quantidade de Placas:</span>
-                            <span id="det-placas" class="detalhe-valor">0 unidades</span>
-                        </div>
-                        <div class="detalhe-item">
-                            <span class="detalhe-label">Modelo do Inversor:</span>
-                            <span id="det-inversor" class="detalhe-valor">Não especificado</span>
-                        </div>
-                        <div class="detalhe-item">
-                            <span class="detalhe-label">Tipo de Estrutura:</span>
-                            <span id="det-estrutura" class="detalhe-valor">Fibrocimento</span>
-                        </div>
-                        <div class="detalhe-item">
-                            <span class="detalhe-label">Grupo Tarifário:</span>
-                            <span id="det-grupo" class="detalhe-valor">-</span>
-                        </div>
-                    </div>
-                </section>
-
-                <div class="action-buttons no-print">
-                    <button class="btn btn-success" onclick="gerarPDF()">📄 Gerar PDF</button>
-                    <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
-                </div>
-            </section>
-        </main>
+            <!-- Botões de Ação -->
+            <div class="flex gap-4 mb-8">
+                <button onclick="gerarProposta()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition transform hover:scale-105">
+                    🧮 Gerar Proposta
+                </button>
+                <button onclick="novaProposta()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition">
+                    🔄 Nova Proposta
+                </button>
+            </div>
+        </div>
     </div>
 
+    <!-- Proposta Gerada (Visível na impressão) -->
+    <div id="secao-resultados" style="display: none;" class="container-print max-w-7xl mx-auto px-4 py-8">
+        <!-- Cabeçalho da Proposta -->
+        <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white rounded-lg shadow-lg p-8 mb-6">
+            <div class="flex justify-between items-start">
+                <div>
+                    <h1 class="text-4xl font-bold mb-2">🌞 PROPOSTA COMERCIAL</h1>
+                    <p class="text-xl text-blue-100">Geração de Energia Solar Fotovoltaica</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-sm text-blue-100">Data:</p>
+                    <p class="text-lg font-semibold" id="header-data-proposta">--/--/----</p>
+                </div>
+            </div>
+            <div class="mt-6 border-t border-blue-400 pt-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <p class="text-sm text-blue-100">Cliente:</p>
+                        <p class="text-lg font-semibold" id="header-nome-cliente">-</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-blue-100">Empresa:</p>
+                        <p class="text-lg font-semibold" id="header-empresa-cliente">-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards de Resultados Principais -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+            <!-- Card Investimento -->
+            <div class="bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-lg p-6 transform transition hover:scale-105">
+                <div class="text-center">
+                    <div class="text-5xl mb-2">💰</div>
+                    <h3 class="text-lg font-semibold mb-2">Investimento Total</h3>
+                    <p class="text-3xl font-bold" id="card-investimento">R$ 0,00</p>
+                    <p class="text-sm text-blue-100 mt-2">Kit Completo + Instalação</p>
+                </div>
+            </div>
+
+            <!-- Card Economia -->
+            <div class="bg-gradient-to-br from-green-500 to-green-700 text-white rounded-lg shadow-lg p-6 transform transition hover:scale-105">
+                <div class="text-center">
+                    <div class="text-5xl mb-2">⚡</div>
+                    <h3 class="text-lg font-semibold mb-2">Economia Mensal</h3>
+                    <p class="text-3xl font-bold" id="card-economia">R$ 0,00</p>
+                    <p class="text-sm text-green-100 mt-2">Média Estimada</p>
+                </div>
+            </div>
+
+            <!-- Card Redução -->
+            <div class="bg-gradient-to-br from-yellow-500 to-yellow-700 text-white rounded-lg shadow-lg p-6 transform transition hover:scale-105">
+                <div class="text-center">
+                    <div class="text-5xl mb-2">📉</div>
+                    <h3 class="text-lg font-semibold mb-2">Redução de Custos</h3>
+                    <p class="text-3xl font-bold" id="card-reducao">0%</p>
+                    <p class="text-sm text-yellow-100 mt-2">Da Conta de Energia</p>
+                </div>
+            </div>
+
+            <!-- Card Payback -->
+            <div class="bg-gradient-to-br from-orange-500 to-orange-700 text-white rounded-lg shadow-lg p-6 transform transition hover:scale-105">
+                <div class="text-center">
+                    <div class="text-5xl mb-2">⏳</div>
+                    <h3 class="text-lg font-semibold mb-2">Payback</h3>
+                    <p class="text-3xl font-bold" id="card-payback">0 anos</p>
+                    <p class="text-sm text-orange-100 mt-2">Retorno do Investimento</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gráficos -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <!-- Gráfico de Comparação -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">📊 Comparativo de Custos</h3>
+                <div style="height: 300px;">
+                    <canvas id="graficoComparacao"></canvas>
+                </div>
+            </div>
+
+            <!-- Gráfico de Economia Acumulada -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">📈 Economia Acumulada</h3>
+                <div style="height: 300px;">
+                    <canvas id="graficoEconomia"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detalhes Técnicos -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6 page-break">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="mr-2">🔧</span> Especificações da Usina Solar
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Potência do Sistema:</span>
+                        <span class="text-gray-900 font-bold" id="det-potencia">0 kWp</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Geração Média Mensal:</span>
+                        <span class="text-gray-900 font-bold" id="det-geracao">0 kWh</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Quantidade de Módulos:</span>
+                        <span class="text-gray-900 font-bold" id="det-placas">0 unidades</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Área Necessária:</span>
+                        <span class="text-gray-900 font-bold" id="det-area">0 m²</span>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Modelo do Módulo:</span>
+                        <span class="text-gray-900 font-bold" id="det-modulo">-</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Modelo do Inversor:</span>
+                        <span class="text-gray-900 font-bold" id="det-inversor">-</span>
+                    </div>
+                    <div class="flex justify-between border-b border-gray-200 pb-2">
+                        <span class="font-semibold text-gray-700">Estrutura de Fixação:</span>
+                        <span class="text-gray-900 font-bold" id="det-estrutura">-</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garantias -->
+            <div class="mt-6 bg-blue-50 rounded-lg p-4">
+                <h3 class="text-lg font-bold text-blue-800 mb-3">🛡️ Garantias</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div class="flex items-start">
+                        <span class="text-2xl mr-2">✅</span>
+                        <div>
+                            <p class="font-semibold text-gray-800">30 Anos</p>
+                            <p class="text-gray-600">Eficiência dos Módulos</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-2xl mr-2">✅</span>
+                        <div>
+                            <p class="font-semibold text-gray-800">25 Anos</p>
+                            <p class="text-gray-600">Garantia de Fabricação</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-2xl mr-2">✅</span>
+                        <div>
+                            <p class="font-semibold text-gray-800">10 Anos</p>
+                            <p class="text-gray-600">Garantia do Inversor</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opções de Financiamento -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="mr-2">💳</span> Opções de Pagamento
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Cartão de Crédito -->
+                <div class="border border-blue-200 rounded-lg p-5 bg-blue-50">
+                    <div class="text-3xl mb-3 text-center">💳</div>
+                    <h3 class="text-lg font-bold text-blue-800 mb-2 text-center" id="fin-1-tipo">Cartão de Crédito</h3>
+                    <p class="text-sm text-gray-600 mb-3 text-center" id="fin-1-descricao">Até 6 cartões diferentes</p>
+                    <div class="bg-white rounded p-3 mb-2">
+                        <p class="text-xs text-gray-600">Parcelas:</p>
+                        <p class="text-2xl font-bold text-gray-900"><span id="fin-1-parcelas">21x</span> de <span id="fin-1-valor">R$ 0,00</span></p>
+                    </div>
+                    <p class="text-xs text-gray-500 text-center" id="fin-1-obs">Parcelamento direto</p>
+                </div>
+
+                <!-- Boleto Bancário -->
+                <div class="border border-green-200 rounded-lg p-5 bg-green-50">
+                    <div class="text-3xl mb-3 text-center">🏦</div>
+                    <h3 class="text-lg font-bold text-green-800 mb-2 text-center" id="fin-2-tipo">Boleto Bancário</h3>
+                    <p class="text-sm text-gray-600 mb-3 text-center" id="fin-2-descricao">Entrada + Parcelamento</p>
+                    <div class="bg-white rounded p-3 mb-2">
+                        <p class="text-xs text-gray-600">Entrada: <span id="fin-2-entrada" class="font-bold">R$ 0,00</span></p>
+                        <p class="text-2xl font-bold text-gray-900 mt-1"><span id="fin-2-parcelas">10x</span> de <span id="fin-2-valor">R$ 0,00</span></p>
+                    </div>
+                    <p class="text-xs text-gray-500 text-center" id="fin-2-obs">20% entrada + 10x</p>
+                </div>
+
+                <!-- Financiamento BV -->
+                <div class="border border-orange-200 rounded-lg p-5 bg-orange-50">
+                    <div class="text-3xl mb-3 text-center">🏦</div>
+                    <h3 class="text-lg font-bold text-orange-800 mb-2 text-center" id="fin-3-tipo">Financiamento BV</h3>
+                    <p class="text-sm text-gray-600 mb-3 text-center" id="fin-3-descricao">60 meses</p>
+                    <div class="bg-white rounded p-3 mb-2">
+                        <p class="text-xs text-gray-600">Carência: <span class="font-bold">90 dias</span></p>
+                        <p class="text-2xl font-bold text-gray-900 mt-1"><span id="fin-3-parcelas">60x</span> de <span id="fin-3-valor">R$ 0,00</span></p>
+                    </div>
+                    <p class="text-xs text-gray-500 text-center" id="fin-3-obs">Sujeito a análise</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Escopo e Prazos -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <!-- Serviços Incluídos -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-green-700 mb-4 flex items-center">
+                    <span class="mr-2">✅</span> Serviços INCLUÍDOS
+                </h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Dimensionamento completo do sistema</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Projeto elétrico e memorial descritivo</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Todos os equipamentos (módulos, inversores, estruturas)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Instalação completa e comissionamento</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Homologação junto à concessionária</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Sistema de monitoramento remoto</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-green-600 mr-2">✓</span>
+                        <span>Treinamento de operação</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Serviços NÃO Incluídos -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold text-red-700 mb-4 flex items-center">
+                    <span class="mr-2">❌</span> Serviços NÃO INCLUÍDOS
+                </h2>
+                <ul class="space-y-2 text-sm">
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2">✗</span>
+                        <span>Reforço estrutural do telhado</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2">✗</span>
+                        <span>Obras civis e adequações prediais</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2">✗</span>
+                        <span>Reparos na instalação elétrica existente</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2">✗</span>
+                        <span>Adequações no padrão de entrada</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2">✗</span>
+                        <span>Taxas da concessionária (se aplicável)</span>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-red-600 mr-2">✗</span>
+                        <span>Limpeza e manutenção periódica dos módulos</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Prazos -->
+        <div class="bg-gradient-to-r from-purple-500 to-purple-700 text-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <span class="mr-2">⏱️</span> Prazos Médios
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
+                <div>
+                    <p class="text-3xl font-bold">30</p>
+                    <p class="text-sm text-purple-100">dias para instalação</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-bold">45</p>
+                    <p class="text-sm text-purple-100">dias para homologação</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-bold">15</p>
+                    <p class="text-sm text-purple-100">dias para vistoria</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-bold">90</p>
+                    <p class="text-sm text-purple-100">dias até geração total</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botões de Ação (ocultos na impressão) -->
+        <div class="no-print flex gap-4 mb-8">
+            <button onclick="window.print()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition">
+                🖨️ Imprimir / Salvar PDF
+            </button>
+            <button onclick="novaProposta()" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition">
+                🔄 Nova Proposta
+            </button>
+        </div>
+
+        <!-- Rodapé -->
+        <div class="bg-gray-100 rounded-lg p-6 text-center border-t-4 border-blue-600">
+            <p class="text-sm text-gray-600 mb-2">
+                <strong>Validade desta proposta:</strong> <span id="validade-proposta">10 dias</span>
+            </p>
+            <p class="text-sm text-gray-600">
+                📞 <strong>Contato:</strong> (XX) XXXXX-XXXX | 📧 <strong>E-mail:</strong> contato@empresa.com.br
+            </p>
+            <p class="text-xs text-gray-500 mt-2">
+                Proposta gerada automaticamente pelo Sistema de Geração de Propostas Solar
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase-config.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/proposta.js"></script>
     <script src="js/script.js"></script>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const hoje = new Date().toISOString().split('T')[0];
-            document.getElementById('data-proposta').value = hoje;
+        // Alternar campos de grupo tarifário
+        function alternarCamposGrupo() {
+            const grupoSelecionado = document.getElementById('grupo-tarifario').value;
+            const camposB = document.getElementById('campos-grupo-b');
+            const camposA = document.getElementById('campos-grupo-a');
+            
+            if (grupoSelecionado === 'A') {
+                camposB.style.display = 'none';
+                camposA.style.display = 'block';
+            } else {
+                camposB.style.display = 'block';
+                camposA.style.display = 'none';
+            }
+        }
+
+        // Nova proposta
+        function novaProposta() {
+            if (confirm('Deseja limpar todos os campos e iniciar uma nova proposta?')) {
+                // Limpar formulário
+                document.getElementById('nome-cliente').value = '';
+                document.getElementById('empresa-cliente').value = '';
+                document.getElementById('cpf-cnpj').value = '';
+                document.getElementById('telefone-cliente').value = '';
+                document.getElementById('email-cliente').value = '';
+                document.getElementById('consumo-total').value = '';
+                document.getElementById('consumo-ponta').value = '';
+                document.getElementById('consumo-fora-ponta').value = '';
+                document.getElementById('outros-valores').value = '0';
+                
+                // Ocultar resultados
+                document.getElementById('secao-resultados').style.display = 'none';
+                
+                // Scroll para o topo
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Focar no nome do cliente
+                document.getElementById('nome-cliente').focus();
+            }
+        }
+
+        // Carregar parâmetros ao iniciar
+        document.addEventListener('DOMContentLoaded', async function() {
+            await carregarParametrosGerais();
+            
+            // Atualizar validade da proposta
+            const validade = window.parametrosGerais?.validade_proposta || 10;
+            const elemValidade = document.getElementById('validade-proposta');
+            if (elemValidade) {
+                elemValidade.textContent = validade + ' dias';
+            }
         });
     </script>
 </body>
