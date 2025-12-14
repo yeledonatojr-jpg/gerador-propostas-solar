@@ -48,8 +48,34 @@ const jsFiles = [
 const { execSync } = require('child_process');
 
 jsFiles.forEach(file => {
+    // Validate file path to prevent command injection and directory traversal
+    if (!/^[a-zA-Z0-9_\-\/\.]+$/.test(file)) {
+        console.log(`  ❌ ${file} - Nome de arquivo inválido!`);
+        hasErrors = true;
+        return;
+    }
+    
     try {
-        execSync(`node --check ${file}`, { stdio: 'pipe' });
+        // Normalize path and ensure it's within project directory
+        const normalizedPath = path.normalize(file);
+        const filePath = path.resolve(process.cwd(), normalizedPath);
+        const projectRoot = path.resolve(process.cwd());
+        
+        // Check if path is within project directory
+        if (!filePath.startsWith(projectRoot)) {
+            console.log(`  ❌ ${file} - Caminho fora do projeto!`);
+            hasErrors = true;
+            return;
+        }
+        
+        if (!fs.existsSync(filePath)) {
+            console.log(`  ❌ ${file} - Arquivo não encontrado!`);
+            hasErrors = true;
+            return;
+        }
+        
+        // Use filePath directly instead of file variable for security
+        execSync(`node --check "${filePath}"`, { stdio: 'pipe' });
         console.log(`  ✅ ${file} - Sintaxe válida`);
     } catch (error) {
         console.log(`  ❌ ${file} - Erro de sintaxe!`);
@@ -60,7 +86,16 @@ jsFiles.forEach(file => {
 
 // Verificar se index.html tem as dependências necessárias
 console.log('\n📦 Verificando dependências no index.html...');
-const indexContent = fs.readFileSync('index.html', 'utf8');
+
+let indexContent;
+try {
+    indexContent = fs.readFileSync('index.html', 'utf8');
+} catch (error) {
+    console.log('  ❌ Não foi possível ler index.html!');
+    console.log(`     ${error.message}`);
+    hasErrors = true;
+    indexContent = '';
+}
 
 const dependencies = [
     { name: 'Tailwind CSS', pattern: /tailwindcss\.com/ },
@@ -69,41 +104,48 @@ const dependencies = [
     { name: 'Google Fonts (Inter)', pattern: /fonts\.googleapis\.com.*Inter/ }
 ];
 
-dependencies.forEach(dep => {
-    if (dep.pattern.test(indexContent)) {
-        console.log(`  ✅ ${dep.name}`);
-    } else {
-        console.log(`  ⚠️  ${dep.name} - Não encontrado!`);
-    }
-});
+if (indexContent) {
+    dependencies.forEach(dep => {
+        if (dep.pattern.test(indexContent)) {
+            console.log(`  ✅ ${dep.name}`);
+        } else {
+            console.log(`  ⚠️  ${dep.name} - Não encontrado!`);
+        }
+    });
+}
 
 // Verificar se os scripts são carregados na ordem correta
 console.log('\n🔄 Verificando ordem de carregamento dos scripts...');
-const scriptOrder = [
-    'supabase-config.js',
-    'utils.js',
-    'proposta.js',
-    'script.js'
-];
 
-let lastIndex = -1;
-let orderCorrect = true;
+if (indexContent) {
+    const scriptOrder = [
+        'supabase-config.js',
+        'utils.js',
+        'proposta.js',
+        'script.js'
+    ];
 
-scriptOrder.forEach(script => {
-    const index = indexContent.indexOf(`src="js/${script}"`);
-    if (index === -1) {
-        console.log(`  ⚠️  ${script} - Não encontrado no HTML!`);
-        orderCorrect = false;
-    } else if (index < lastIndex) {
-        console.log(`  ❌ ${script} - Ordem incorreta!`);
-        orderCorrect = false;
-    } else {
-        lastIndex = index;
+    let lastIndex = -1;
+    let orderCorrect = true;
+
+    scriptOrder.forEach(script => {
+        const index = indexContent.indexOf(`src="js/${script}"`);
+        if (index === -1) {
+            console.log(`  ⚠️  ${script} - Não encontrado no HTML!`);
+            orderCorrect = false;
+        } else if (index < lastIndex) {
+            console.log(`  ❌ ${script} - Ordem incorreta!`);
+            orderCorrect = false;
+        } else {
+            lastIndex = index;
+        }
+    });
+
+    if (orderCorrect) {
+        console.log('  ✅ Scripts carregados na ordem correta');
     }
-});
-
-if (orderCorrect) {
-    console.log('  ✅ Scripts carregados na ordem correta');
+} else {
+    console.log('  ⚠️  Pulando verificação - index.html não está disponível');
 }
 
 // Resumo

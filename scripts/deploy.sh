@@ -34,12 +34,16 @@ echo "  [ ] Testar sistema localmente"
 echo "  [ ] Fazer upload dos arquivos para o servidor"
 echo ""
 
-# Perguntar se quer continuar
-read -p "Deseja continuar com o deploy? (s/N) " -n 1 -r
-echo
-if [[ ! $REPLY =~ ^[SsYy]$ ]]; then
-    echo "❌ Deploy cancelado."
-    exit 1
+# Perguntar se quer continuar (apenas em modo interativo)
+if [ -t 0 ] && [ -z "$CI" ]; then
+    read -p "Deseja continuar com o deploy? (s/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[SsYy]$ ]]; then
+        echo "❌ Deploy cancelado."
+        exit 1
+    fi
+else
+    echo "ℹ️  Modo não-interativo detectado (CI/CD). Continuando..."
 fi
 
 # Criar diretório de build/dist se necessário

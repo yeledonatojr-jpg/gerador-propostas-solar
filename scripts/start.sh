@@ -26,6 +26,20 @@ fi
 # Porta padrão
 PORT=${PORT:-8080}
 
+# Validar que PORT contém apenas números (POSIX compatible)
+case "$PORT" in
+    ''|*[!0-9]*)
+        echo "❌ Erro: PORT deve conter apenas números. Valor fornecido: $PORT"
+        exit 1
+        ;;
+esac
+
+# Validar que PORT está em um range válido
+if [ "$PORT" -lt 1 ] || [ "$PORT" -gt 65535 ]; then
+    echo "❌ Erro: PORT deve estar entre 1 e 65535. Valor fornecido: $PORT"
+    exit 1
+fi
+
 echo "✅ Python encontrado: $PYTHON_CMD"
 echo "🌐 Iniciando servidor HTTP na porta $PORT..."
 echo ""

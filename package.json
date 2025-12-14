@@ -4,9 +4,9 @@
   "description": "Sistema profissional e completo para geração de propostas comerciais de energia solar fotovoltaica",
   "main": "index.html",
   "scripts": {
-    "start": "python3 -m http.server 8080",
+    "start": "sh scripts/start.sh || python -m http.server 8080 || python3 -m http.server 8080",
     "start:node": "npx http-server -p 8080 -o",
-    "dev": "python3 -m http.server 8080",
+    "dev": "npm start",
     "test": "node tests/validate.js",
     "validate": "node --check js/*.js && echo '✅ All JavaScript files are valid'",
     "deploy": "sh scripts/deploy.sh"
