@@ -43,6 +43,7 @@ logs/
 *.bak
 *.backup
 *~
+index.html.bak
 
 # Arquivos de ambiente (se houver)
 .env
