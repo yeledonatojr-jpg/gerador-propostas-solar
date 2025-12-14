@@ -1,0 +1,191 @@
+/* ========================================
+   ESTILOS PARA IMPRESSÃO (PDF)
+======================================== */
+
+@media print {
+    
+    /* Remover elementos não necessários */
+    . no-print,
+    .header . btn-config,
+    .action-buttons,
+    .desconto-section,
+    .footer {
+        display: none !important;
+    }
+
+    /* Ajustes gerais */
+    body {
+        background:  white;
+        padding: 0;
+        margin:  0;
+        font-size: 12pt;
+    }
+
+    .container {
+        max-width: 100%;
+        box-shadow: none;
+        padding: 20px;
+        margin: 0;
+    }
+
+    /* Header simplificado */
+    .header {
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+    }
+
+    . header h1 {
+        font-size: 24pt;
+        color: #007bff;
+    }
+
+    /* Seções */
+    .section {
+        page-break-inside: avoid;
+        margin-bottom: 20px;
+        border:  1px solid #dee2e6;
+        padding: 15px;
+    }
+
+    . section h2 {
+        font-size: 16pt;
+        color: #007bff;
+        margin-bottom: 15px;
+    }
+
+    /* Cards de resultados */
+    .card-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        page-break-inside: avoid;
+    }
+
+    .card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        -webkit-print-color-adjust:  exact;
+        print-color-adjust: exact;
+        color: white !important;
+        padding: 15px;
+        border-radius:  8px;
+    }
+
+    .card-icon {
+        font-size:  2rem;
+    }
+
+    .card . valor-principal {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    /* Forçar cores dos cards */
+    .card. investimento-total {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    }
+
+    . card.economia-mensal {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
+    }
+
+    .card.percentual-economia {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
+    }
+
+    .card. payback-estimado {
+        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
+    }
+
+    /* Detalhes técnicos */
+    .detalhes-tecnicos {
+        page-break-inside: avoid;
+        background: #f8f9fa;
+        -webkit-print-color-adjust:  exact;
+        print-color-adjust: exact;
+        padding:  15px;
+        border-radius: 8px;
+    }
+
+    .tabela-detalhes {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .tabela-detalhes tr {
+        border-bottom:  1px solid #dee2e6;
+    }
+
+    . tabela-detalhes td {
+        padding: 10px;
+    }
+
+    /* Formulários (dados do cliente) */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        width: 100%;
+        background: white;
+    }
+
+    /* Quebras de página */
+    h2 {
+        page-break-after: avoid;
+    }
+
+    #visao-geral-resultados {
+        page-break-before: always;
+    }
+
+    /* Rodapé personalizado para impressão */
+    @page {
+        margin: 2cm;
+        @bottom-center {
+            content: "🌞 Gerador de Propostas Solar - Página " counter(page);
+        }
+    }
+
+    /* Evitar quebras indesejadas */
+    .card,
+    .form-group,
+    .detalhes-tecnicos,
+    table tr {
+        page-break-inside:  avoid;
+    }
+
+    /* Melhorar contraste para impressão */
+    body {
+        color: #000;
+    }
+
+    /* Ocultar campos vazios na impressão */
+    input: empty,
+    select:empty {
+        border: none;
+    }
+}
+
+/* ========================================
+   AJUSTES ESPECÍFICOS PARA CHROME/EDGE
+======================================== */
+
+@media print {
+    /* Garantir que gráficos de fundo sejam impressos */
+    * {
+        -webkit-print-color-adjust:  exact ! important;
+        print-color-adjust: exact !important;
+    }
+}

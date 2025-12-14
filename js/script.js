@@ -39,13 +39,13 @@ async function carregarConfiguracoesGlobais() {
             CONFIG = {
                 fatorIrradiacao: data.fator_irradiacao || 113,
                 potenciaPlaca: data.potencia_placa || 625,
-                eficienciaSistema: data. eficiencia_sistema || 80,
+                eficienciaSistema: data.eficiencia_sistema || 80,
                 precoKwpBase: data.preco_kwp_base || 2450,
                 tarifaBPadrao: data.tarifa_b_padrao || 0.95,
                 tarifaPontaPadrao: data.tarifa_ponta_padrao || 1.25,
-                tarifaForaPontaPadrao: data. tarifa_fora_ponta_padrao || 0.65,
+                tarifaForaPontaPadrao: data.tarifa_fora_ponta_padrao || 0.65,
                 reajusteAnual: data.reajuste_anual || 8.5,
-                taxaJuros:  data.taxa_juros || 1.49
+                taxaJuros: data.taxa_juros || 1.49
             };
             console.log('✅ Configurações personalizadas carregadas');
         }
@@ -66,7 +66,7 @@ function alternarCamposGrupo() {
         camposA.style.display = 'block';
     } else {
         camposB.style.display = 'block';
-        camposA. style.display = 'none';
+        camposA.style.display = 'none';
     }
 }
 
@@ -123,7 +123,7 @@ function calcularProposta() {
 // Calcular para Grupo B
 function calcularGrupoB() {
     const consumoTotal = parseFloat(document.getElementById('consumo-total').value);
-    const tarifaConsumo = parseFloat(document. getElementById('tarifa-consumo').value);
+    const tarifaConsumo = parseFloat(document.getElementById('tarifa-consumo').value);
     const custoIluminacao = parseFloat(document.getElementById('custo-iluminacao').value) || 0;
     
     // Validações
@@ -158,7 +158,7 @@ function calcularGrupoB() {
     
     // Aplicar desconto se houver
     const descontoAplicado = calcularDesconto(investimentoTotal);
-    investimentoTotal = descontoAplicado. valorFinal;
+    investimentoTotal = descontoAplicado.valorFinal;
     
     // Economia mensal
     const economiaMensal = consumoCompensavel * tarifaConsumo;
@@ -189,10 +189,10 @@ function calcularGrupoB() {
 function calcularGrupoA() {
     const consumoPonta = parseFloat(document.getElementById('consumo-ponta').value);
     const tarifaPonta = parseFloat(document.getElementById('tarifa-ponta').value);
-    const consumoForaPonta = parseFloat(document. getElementById('consumo-fora-ponta').value);
+    const consumoForaPonta = parseFloat(document.getElementById('consumo-fora-ponta').value);
     const tarifaForaPonta = parseFloat(document.getElementById('tarifa-fora-ponta').value);
     const demandaContratada = parseFloat(document.getElementById('demanda-contratada').value) || 0;
-    const tarifaDemanda = parseFloat(document. getElementById('tarifa-demanda').value) || 0;
+    const tarifaDemanda = parseFloat(document.getElementById('tarifa-demanda').value) || 0;
     
     // Validações
     if (!consumoPonta || ! consumoForaPonta) {
@@ -218,7 +218,7 @@ function calcularGrupoA() {
     const quantidadePlacas = Math.ceil((potenciaKwp * 1000) / CONFIG.potenciaPlaca);
     
     // Potência real instalada
-    const potenciaReal = (quantidadePlacas * CONFIG. potenciaPlaca) / 1000;
+    const potenciaReal = (quantidadePlacas * CONFIG.potenciaPlaca) / 1000;
     
     // Custo do sistema
     const outrosValores = parseFloat(document.getElementById('outros-valores').value) || 0;
@@ -299,16 +299,16 @@ function calcularDesconto(valorOriginal) {
 // Exibir resultados
 function exibirResultados(resultados) {
     // Cards principais
-    document.getElementById('res-investimento').textContent = formatarMoeda(resultados. investimentoTotal);
+    document.getElementById('res-investimento').textContent = formatarMoeda(resultados.investimentoTotal);
     document.getElementById('res-economia-mensal').textContent = formatarMoeda(resultados.economiaMensal);
     document.getElementById('res-percentual-economia').textContent = formatarNumero(resultados.percentualEconomia, 1) + '%';
     document.getElementById('res-payback').textContent = formatarNumero(resultados.paybackAnos, 1) + ' Anos';
     
     // Nota de investimento (com desconto se aplicável)
-    if (resultados. desconto.aplicado) {
+    if (resultados.desconto.aplicado) {
         const textoDesconto = resultados.desconto.tipo === 'fixo' 
-            ? `Desconto de ${formatarMoeda(resultados. desconto.valor)} aplicado`
-            : `Desconto de ${formatarNumero(resultados.desconto. percentual, 1)}% aplicado`;
+            ? `Desconto de ${formatarMoeda(resultados.desconto.valor)} aplicado`
+            : `Desconto de ${formatarNumero(resultados.desconto.percentual, 1)}% aplicado`;
         document.getElementById('nota-investimento').textContent = textoDesconto;
     } else {
         document.getElementById('nota-investimento').textContent = 'Kit Usina + Instalação';
@@ -342,15 +342,15 @@ function novaProposta() {
         // Limpar campos grupo B
         document.getElementById('consumo-total').value = '';
         document.getElementById('tarifa-consumo').value = CONFIG.tarifaBPadrao;
-        document. getElementById('custo-iluminacao').value = 0;
+        document.getElementById('custo-iluminacao').value = 0;
         
         // Limpar campos grupo A
         document.getElementById('consumo-ponta').value = '';
         document.getElementById('tarifa-ponta').value = CONFIG.tarifaPontaPadrao;
         document.getElementById('consumo-fora-ponta').value = '';
         document.getElementById('tarifa-fora-ponta').value = CONFIG.tarifaForaPontaPadrao;
-        document. getElementById('demanda-contratada').value = '';
-        document. getElementById('tarifa-demanda').value = '';
+        document.getElementById('demanda-contratada').value = '';
+        document.getElementById('tarifa-demanda').value = '';
         
         // Limpar especificações
         document.getElementById('modelo-inversor').value = '';
@@ -358,13 +358,13 @@ function novaProposta() {
         document.getElementById('outros-valores').value = 0;
         
         // Limpar desconto
-        document. getElementById('aplicar-desconto').checked = false;
-        document. getElementById('campo-desconto').style.display = 'none';
-        document. getElementById('percentual-desconto').value = 0;
+        document.getElementById('aplicar-desconto').checked = false;
+        document.getElementById('campo-desconto').style.display = 'none';
+        document.getElementById('percentual-desconto').value = 0;
         document.getElementById('valor-desconto-fixo').value = 0;
         
         // Ocultar resultados
-        document. getElementById('visao-geral-resultados').style.display = 'none';
+        document.getElementById('visao-geral-resultados').style.display = 'none';
         
         // Scroll para o topo
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -376,5 +376,13 @@ function novaProposta() {
 
 // Gerar PDF
 function gerarPDF() {
-    alert('🚧 Funcionalidade de geração de PDF em desenvolvimento!\n\nPor enquanto, use a op*
+    alert('🚧 Funcionalidade de geração de PDF em desenvolvimento!\n\nPor enquanto, use a opção de Imprimir e salve como PDF através do navegador.');
+}
+
+// Carregar configurações ao iniciar a página
+if (typeof window !== 'undefined') {
+    window.addEventListener('DOMContentLoaded', async () => {
+        await carregarConfiguracoesGlobais();
+    });
+}
 
