@@ -4,7 +4,7 @@
 
 # Arquivos do sistema operacional
 .DS_Store
-. DS_Store?
+.DS_Store?
 ._*
 .Spotlight-V100
 .Trashes
@@ -13,10 +13,10 @@ Thumbs.db
 Desktop.ini
 
 # Arquivos de editor
-. vscode/
-. idea/
+.vscode/
+.idea/
 *.swp
-*. swo
+*.swo
 *~
 .project
 .settings/
@@ -36,18 +36,18 @@ logs/
 
 # Arquivos temporários
 *.tmp
-*. temp
+*.temp
 *.cache
 
 # Arquivos de backup
-*. bak
+*.bak
 *.backup
 *~
 
 # Arquivos de ambiente (se houver)
 .env
 .env.local
-.env. production
+.env.production
 
 # Pastas de build/dist (se houver)
 dist/
@@ -56,11 +56,11 @@ out/
 
 # Arquivos de teste
 coverage/
-. nyc_output/
+.nyc_output/
 
 # Arquivos específicos do projeto
 propostas-geradas/
-*. pdf
+*.pdf
 relatorios/
 
 # Credenciais (proteção extra - NÃO commitar credenciais!)
@@ -69,7 +69,7 @@ relatorios/
 *keys*
 
 # Arquivos grandes
-*. zip
-*. rar
+*.zip
+*.rar
 *.7z
-*.tar. gz
+*.tar.gz

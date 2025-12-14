@@ -7,7 +7,7 @@ let CONFIG = {
     fatorIrradiacao: 113,
     potenciaPlaca: 625,
     eficienciaSistema: 80,
-    precoKwpBase:  2450,
+    precoKwpBase: 2450,
     tarifaBPadrao: 0.95,
     tarifaPontaPadrao: 1.25,
     tarifaForaPontaPadrao: 0.65,
