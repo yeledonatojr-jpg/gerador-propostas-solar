@@ -9,35 +9,35 @@ CREATE TABLE IF NOT EXISTS parametros_gerais (
   id INTEGER PRIMARY KEY,
   
   -- Parâmetros Técnicos
-  fator_irradiacao DECIMAL(10,2) DEFAULT 113.0 
-    COMMENT 'Fator de irradiação solar médio da região (kWh/kWp/mês)',
+  -- Fator de irradiação solar médio da região (kWh/kWp/mês)
+  fator_irradiacao DECIMAL(10,2) DEFAULT 113.0,
   
-  potencia_placa_wp INTEGER DEFAULT 625 
-    COMMENT 'Potência nominal das placas solares em Watts',
+  -- Potência nominal das placas solares em Watts
+  potencia_placa_wp INTEGER DEFAULT 625,
   
   -- Parâmetros Financeiros
-  preco_kwp_base DECIMAL(10,2) DEFAULT 4500.00 
-    COMMENT 'Preço base por kWp instalado em Reais',
+  -- Preço base por kWp instalado em Reais
+  preco_kwp_base DECIMAL(10,2) DEFAULT 4500.00,
   
-  inflacao_anual_energia DECIMAL(5,4) DEFAULT 0.0500 
-    COMMENT 'Taxa de inflação energética anual (5% = 0.0500)',
+  -- Taxa de inflação energética anual (5% = 0.0500)
+  inflacao_anual_energia DECIMAL(5,4) DEFAULT 0.0500,
   
   -- Parâmetros Comerciais
-  validade_proposta INTEGER DEFAULT 10 
-    COMMENT 'Validade da proposta em dias',
+  -- Validade da proposta em dias
+  validade_proposta INTEGER DEFAULT 10,
   
-  nome_representante TEXT DEFAULT 'Donato Junior' 
-    COMMENT 'Nome do representante comercial padrão',
+  -- Nome do representante comercial padrão
+  nome_representante TEXT DEFAULT 'Donato Junior',
   
   -- Especificações de Equipamentos
-  modelo_modulo TEXT DEFAULT 'YHSUNPRO TOPCon BIFACIAL 620-635W' 
-    COMMENT 'Modelo padrão dos módulos fotovoltaicos',
+  -- Modelo padrão dos módulos fotovoltaicos
+  modelo_modulo TEXT DEFAULT 'YHSUNPRO TOPCon BIFACIAL 620-635W',
   
-  modelo_inversor TEXT DEFAULT 'SAJ 30K-220V' 
-    COMMENT 'Modelo padrão do inversor solar',
+  -- Modelo padrão do inversor solar
+  modelo_inversor TEXT DEFAULT 'SAJ 30K-220V',
   
-  estrutura TEXT DEFAULT 'Fibrocimento' 
-    COMMENT 'Tipo de estrutura de fixação padrão',
+  -- Tipo de estrutura de fixação padrão
+  estrutura TEXT DEFAULT 'Fibrocimento',
   
   -- Metadados
   created_at TIMESTAMP DEFAULT NOW(),

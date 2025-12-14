@@ -119,8 +119,13 @@ function atualizarStatusConexao(tipo, mensagem) {
 // Inicializar automaticamente quando a página carregar
 if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', async () => {
-        initSupabase();
-        await carregarParametrosGerais();
+        try {
+            initSupabase();
+            await carregarParametrosGerais();
+        } catch (error) {
+            console.error('❌ Erro ao inicializar sistema:', error);
+            atualizarStatusConexao('error', 'Erro na inicialização - Usando valores padrão');
+        }
     });
 }
 

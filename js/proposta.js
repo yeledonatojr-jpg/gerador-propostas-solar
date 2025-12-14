@@ -1,9 +1,25 @@
 /* ========================================
    ENGINE DE CÁLCULOS E GERAÇÃO DE PROPOSTA
+   
+   Dependências externas:
+   - utils.js: formatarMoeda(), formatarNumero(), scrollParaElemento()
+   - supabase-config.js: window.parametrosGerais
+   - Chart.js: window.Chart
 ======================================== */
 
 // Variáveis globais para armazenar resultados
 let resultadosAtuais = null;
+
+// Constantes de configuração padrão (fallback)
+const CONFIG_PADRAO = {
+    fator_irradiacao: 113.0,
+    potencia_placa_wp: 625,
+    preco_kwp_base: 4500.00,
+    inflacao_anual_energia: 0.05,
+    modelo_modulo: 'YHSUNPRO TOPCon BIFACIAL 620-635W',
+    modelo_inversor: 'SAJ 30K-220V',
+    estrutura: 'Fibrocimento'
+};
 
 /* ========================================
    FUNÇÕES DE DIMENSIONAMENTO
@@ -11,11 +27,7 @@ let resultadosAtuais = null;
 
 // Calcular dimensionamento do sistema
 function calcularDimensionamento(consumoMensal, grupoTarifario) {
-    const params = window.parametrosGerais || {
-        fator_irradiacao: 113.0,
-        potencia_placa_wp: 625,
-        preco_kwp_base: 4500.00
-    };
+    const params = window.parametrosGerais || CONFIG_PADRAO;
 
     // Consumo compensável (descontar mínimo de 100 kWh para Grupo B)
     let consumoCompensavel = consumoMensal;
@@ -53,10 +65,7 @@ function calcularDimensionamento(consumoMensal, grupoTarifario) {
 
 // Calcular economia e payback
 function calcularEconomia(dados, dimensionamento) {
-    const params = window.parametrosGerais || {
-        preco_kwp_base: 4500.00,
-        inflacao_anual_energia: 0.05
-    };
+    const params = window.parametrosGerais || CONFIG_PADRAO;
 
     // Custo do sistema
     let investimentoTotal = dimensionamento.potenciaKwp * params.preco_kwp_base;
