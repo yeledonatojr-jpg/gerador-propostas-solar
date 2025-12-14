@@ -118,9 +118,9 @@ function formatarTelefone(telefone) {
 
 // Mostrar mensagem de sucesso
 function mostrarSucesso(mensagem, elementoId = 'mensagem') {
-    const elemento = document. getElementById(elementoId);
+    const elemento = document.getElementById(elementoId);
     if (elemento) {
-        elemento. className = 'mensagem-sucesso';
+        elemento.className = 'mensagem-sucesso';
         elemento.innerHTML = `✅ ${mensagem}`;
         elemento.style.display = 'block';
         
@@ -134,12 +134,12 @@ function mostrarSucesso(mensagem, elementoId = 'mensagem') {
 function mostrarErro(mensagem, elementoId = 'mensagem') {
     const elemento = document.getElementById(elementoId);
     if (elemento) {
-        elemento. className = 'mensagem-erro';
+        elemento.className = 'mensagem-erro';
         elemento.innerHTML = `❌ ${mensagem}`;
         elemento.style.display = 'block';
         
         setTimeout(() => {
-            elemento. style.display = 'none';
+            elemento.style.display = 'none';
         }, 5000);
     }
 }
@@ -154,7 +154,7 @@ function limparFormulario(formId) {
 
 // Scroll suave para elemento
 function scrollParaElemento(elementoId) {
-    const elemento = document. getElementById(elementoId);
+    const elemento = document.getElementById(elementoId);
     if (elemento) {
         elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -166,7 +166,7 @@ function debounce(func, wait) {
     return function executedFunction(...args) {
         const later = () => {
             clearTimeout(timeout);
-            func(... args);
+            func(...args);
         };
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
@@ -241,7 +241,7 @@ function calcularPorcentagem(valor, total) {
 
 // Arredondar para n casas decimais
 function arredondar(numero, casas = 2) {
-    return Math.round(numero * Math. pow(10, casas)) / Math.pow(10, casas);
+    return Math.round(numero * Math.pow(10, casas)) / Math.pow(10, casas);
 }
 
 /* ========================================

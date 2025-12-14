@@ -9,7 +9,7 @@ async function fazerLogin() {
     
     // Validações
     if (campoVazio(email) || campoVazio(senha)) {
-        mostrarErro('Por favor, preencha e-mail e senha. ', 'login-erro');
+        mostrarErro('Por favor, preencha e-mail e senha.', 'login-erro');
         return;
     }
     
@@ -19,7 +19,7 @@ async function fazerLogin() {
     }
     
     try {
-        const { data, error } = await supabase. auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
             password: senha
         });
@@ -42,7 +42,7 @@ async function fazerLogin() {
 // Fazer logout
 async function fazerLogout() {
     try {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
         
         if (error) throw error;
         
@@ -69,7 +69,7 @@ async function carregarConfiguracoes() {
     try {
         const user = await obterUsuarioAtual();
         
-        if (! user) {
+        if (!user) {
             console.log('⚠️ Usuário não autenticado');
             return;
         }
@@ -127,7 +127,7 @@ function preencherFormularioConfig(config) {
     document.getElementById('cfg-tarifa-b-padrao').value = config.tarifa_b_padrao || 0.95;
     document.getElementById('cfg-tarifa-ponta-padrao').value = config.tarifa_ponta_padrao || 1.25;
     document.getElementById('cfg-tarifa-fora-ponta-padrao').value = config.tarifa_fora_ponta_padrao || 0.65;
-    document.getElementById('cfg-reajuste-anual').value = config.reajuste_anual || 8. 5;
+    document.getElementById('cfg-reajuste-anual').value = config.reajuste_anual || 8.5;
     document.getElementById('cfg-taxa-juros').value = config.taxa_juros || 1.49;
 }
 
@@ -137,7 +137,7 @@ async function salvarConfiguracoes() {
         const user = await obterUsuarioAtual();
         
         if (!user) {
-            mostrarErro('Você precisa estar autenticado para salvar. ', 'config-mensagem');
+            mostrarErro('Você precisa estar autenticado para salvar.', 'config-mensagem');
             return;
         }
         
@@ -148,15 +148,15 @@ async function salvarConfiguracoes() {
             cnpj: document.getElementById('cfg-cnpj').value,
             telefone: document.getElementById('cfg-telefone').value,
             email: document.getElementById('cfg-email').value,
-            endereco: document. getElementById('cfg-endereco').value,
+            endereco: document.getElementById('cfg-endereco').value,
             fator_irradiacao: parseFloat(document.getElementById('cfg-fator-irradiacao').value),
             potencia_placa: parseFloat(document.getElementById('cfg-potencia-placa').value),
-            eficiencia_sistema: parseFloat(document. getElementById('cfg-eficiencia-sistema').value),
+            eficiencia_sistema: parseFloat(document.getElementById('cfg-eficiencia-sistema').value),
             preco_kwp_base: parseFloat(document.getElementById('cfg-preco-kwp-base').value),
-            tarifa_b_padrao: parseFloat(document. getElementById('cfg-tarifa-b-padrao').value),
+            tarifa_b_padrao: parseFloat(document.getElementById('cfg-tarifa-b-padrao').value),
             tarifa_ponta_padrao: parseFloat(document.getElementById('cfg-tarifa-ponta-padrao').value),
-            tarifa_fora_ponta_padrao: parseFloat(document. getElementById('cfg-tarifa-fora-ponta-padrao').value),
-            reajuste_anual: parseFloat(document. getElementById('cfg-reajuste-anual').value),
+            tarifa_fora_ponta_padrao: parseFloat(document.getElementById('cfg-tarifa-fora-ponta-padrao').value),
+            reajuste_anual: parseFloat(document.getElementById('cfg-reajuste-anual').value),
             taxa_juros: parseFloat(document.getElementById('cfg-taxa-juros').value),
             updated_at: new Date().toISOString()
         };
@@ -206,11 +206,11 @@ function exibirKits(kits) {
     const container = document.getElementById('kits-lista');
     
     if (kits.length === 0) {
-        container. innerHTML = '<p class="texto-vazio">Nenhum kit cadastrado ainda.</p>';
+        container.innerHTML = '<p class="texto-vazio">Nenhum kit cadastrado ainda.</p>';
         return;
     }
     
-    container. innerHTML = kits.map(kit => `
+    container.innerHTML = kits.map(kit => `
         <div class="kit-card">
             <h4>${kit.nome}</h4>
             <p><strong>Potência:</strong> ${kit.potencia_kwp} kWp</p>
@@ -252,7 +252,7 @@ async function salvarKit() {
         const user = await obterUsuarioAtual();
         
         if (!user) {
-            mostrarErro('Você precisa estar autenticado. ', 'config-mensagem');
+            mostrarErro('Você precisa estar autenticado.', 'config-mensagem');
             return;
         }
         
@@ -298,7 +298,7 @@ async function salvarKit() {
 
 // Excluir kit
 async function excluirKit(kitId) {
-    if (! confirm('Tem certeza que deseja excluir este kit?')) return;
+    if (!confirm('Tem certeza que deseja excluir este kit?')) return;
     
     try {
         const { error } = await supabase
@@ -322,11 +322,11 @@ async function excluirKit(kitId) {
 // Verificar autenticação ao carregar página
 if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', async () => {
-        if (window.location.pathname. includes('config.html')) {
+        if (window.location.pathname.includes('config.html')) {
             const session = await verificarAutenticacao();
             if (session) {
                 await carregarConfiguracoes();
             }
         }
     });
-          }
+}

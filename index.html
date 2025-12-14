@@ -93,7 +93,61 @@
                             <label for="tarifa-fora-ponta">Tarifa Fora Ponta (R$/kWh): *</label>
                             <input type="number" id="tarifa-fora-ponta" step="0.0001" min="0" value="0.65">
                         </div>
+                        <div class="form-group">
+                            <label for="demanda-contratada">Demanda Contratada (kW):</label>
+                            <input type="number" id="demanda-contratada" step="0.01" min="0" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="tarifa-demanda">Tarifa de Demanda (R$/kW):</label>
+                            <input type="number" id="tarifa-demanda" step="0.01" min="0" value="0">
+                        </div>
                     </div>
+                </div>
+            </section>
+
+            <section class="section especificacoes">
+                <h2>🔧 Especificações do Sistema</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="modelo-inversor">Modelo do Inversor:</label>
+                        <input type="text" id="modelo-inversor" placeholder="Ex: Growatt 5K">
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo-estrutura">Tipo de Estrutura:</label>
+                        <select id="tipo-estrutura">
+                            <option value="Fibrocimento">Fibrocimento</option>
+                            <option value="Metálico">Metálico</option>
+                            <option value="Laje">Laje</option>
+                            <option value="Solo">Solo</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="outros-valores">Outros Valores (R$):</label>
+                        <input type="number" id="outros-valores" step="0.01" min="0" value="0">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section desconto no-print">
+                <h2>💰 Desconto</h2>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="aplicar-desconto" onchange="toggleDesconto()">
+                        Aplicar Desconto
+                    </label>
+                </div>
+                <div id="campo-desconto" style="display: none;">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="percentual-desconto">Desconto Percentual (%):</label>
+                            <input type="number" id="percentual-desconto" step="0.01" min="0" max="100" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="valor-desconto-fixo">Desconto Fixo (R$):</label>
+                            <input type="number" id="valor-desconto-fixo" step="0.01" min="0" value="0">
+                        </div>
+                    </div>
+                    <small class="nota">Prioridade: Valor fixo > Percentual</small>
                 </div>
             </section>
 
@@ -109,17 +163,57 @@
                         <span class="card-icon">💰</span>
                         <h3>Investimento Total</h3>
                         <p id="res-investimento" class="valor-principal">R$ 0,00</p>
+                        <small id="nota-investimento" class="nota">Kit Usina + Instalação</small>
                     </div>
                     <div class="card economia-mensal">
                         <span class="card-icon">⚡</span>
                         <h3>Economia Mensal</h3>
                         <p id="res-economia-mensal" class="valor-principal">R$ 0,00</p>
+                        <small class="nota">Média estimada</small>
+                    </div>
+                    <div class="card economia-percentual">
+                        <span class="card-icon">📈</span>
+                        <h3>Percentual de Economia</h3>
+                        <p id="res-percentual-economia" class="valor-principal">0%</p>
+                        <small class="nota">Em relação ao gasto atual</small>
                     </div>
                     <div class="card payback-estimado">
                         <span class="card-icon">⏳</span>
                         <h3>Payback</h3>
                         <p id="res-payback" class="valor-principal">0 Anos</p>
+                        <small class="nota">Retorno do investimento</small>
                     </div>
+                </div>
+
+                <section class="section detalhes-tecnicos">
+                    <h3>🔍 Detalhes Técnicos</h3>
+                    <div class="detalhes-grid">
+                        <div class="detalhe-item">
+                            <span class="detalhe-label">Potência do Sistema:</span>
+                            <span id="det-potencia" class="detalhe-valor">0 kWp</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <span class="detalhe-label">Quantidade de Placas:</span>
+                            <span id="det-placas" class="detalhe-valor">0 unidades</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <span class="detalhe-label">Modelo do Inversor:</span>
+                            <span id="det-inversor" class="detalhe-valor">Não especificado</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <span class="detalhe-label">Tipo de Estrutura:</span>
+                            <span id="det-estrutura" class="detalhe-valor">Fibrocimento</span>
+                        </div>
+                        <div class="detalhe-item">
+                            <span class="detalhe-label">Grupo Tarifário:</span>
+                            <span id="det-grupo" class="detalhe-valor">-</span>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="action-buttons no-print">
+                    <button class="btn btn-success" onclick="gerarPDF()">📄 Gerar PDF</button>
+                    <button class="btn btn-secondary" onclick="window.print()">🖨️ Imprimir</button>
                 </div>
             </section>
         </main>
