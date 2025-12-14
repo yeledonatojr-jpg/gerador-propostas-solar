@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌞 Gerador de Propostas Solar</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/print.css" media="print">
+</head>
+<body>
+    <div class="container">
+        <header class="header no-print">
+            <h1>🌞 Gerador de Propostas Solar</h1>
+            <a href="config.html" class="btn-config">⚙️ Configurações</a>
+        </header>
+
+        <main>
+            <section class="section dados-cliente">
+                <h2>📋 Dados do Cliente</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nome-cliente">Nome do Cliente: *</label>
+                        <input type="text" id="nome-cliente" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa-cliente">Empresa:</label>
+                        <input type="text" id="empresa-cliente">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpf-cnpj">CPF/CNPJ:</label>
+                        <input type="text" id="cpf-cnpj">
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone-cliente">Telefone:</label>
+                        <input type="tel" id="telefone-cliente">
+                    </div>
+                    <div class="form-group">
+                        <label for="representante">Representante:</label>
+                        <input type="text" id="representante">
+                    </div>
+                    <div class="form-group">
+                        <label for="data-proposta">Data da Proposta:</label>
+                        <input type="date" id="data-proposta">
+                    </div>
+                </div>
+            </section>
+
+            <section class="section grupo-tarifario">
+                <h2>⚡ Grupo Tarifário</h2>
+                <div class="form-group">
+                    <label for="grupo-tarifario">Selecione o Grupo:</label>
+                    <select id="grupo-tarifario" onchange="alternarCamposGrupo()">
+                        <option value="B">Grupo B - Residencial/Comercial</option>
+                        <option value="B-Optante">Grupo B - Optante</option>
+                        <option value="A">Grupo A - Consumidor Industrial</option>
+                    </select>
+                </div>
+
+                <div id="campos-grupo-b" class="campos-tarifarios">
+                    <h3>Consumo e Tarifas</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="consumo-total">Consumo Total Mensal (kWh): *</label>
+                            <input type="number" id="consumo-total" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="tarifa-consumo">Tarifa de Consumo (R$/kWh): *</label>
+                            <input type="number" id="tarifa-consumo" step="0.0001" min="0" value="0.95">
+                        </div>
+                        <div class="form-group">
+                            <label for="custo-iluminacao">Custo de Iluminação Pública (R$):</label>
+                            <input type="number" id="custo-iluminacao" step="0.01" min="0" value="0">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="campos-grupo-a" class="campos-tarifarios" style="display: none;">
+                    <h3>⚡ Consumo por Horário</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="consumo-ponta">Consumo Ponta (kWh): *</label>
+                            <input type="number" id="consumo-ponta" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="tarifa-ponta">Tarifa Ponta (R$/kWh): *</label>
+                            <input type="number" id="tarifa-ponta" step="0.0001" min="0" value="1.25">
+                        </div>
+                        <div class="form-group">
+                            <label for="consumo-fora-ponta">Consumo Fora Ponta (kWh): *</label>
+                            <input type="number" id="consumo-fora-ponta" step="0.01" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="tarifa-fora-ponta">Tarifa Fora Ponta (R$/kWh): *</label>
+                            <input type="number" id="tarifa-fora-ponta" step="0.0001" min="0" value="0.65">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="action-buttons no-print">
+                <button class="btn btn-primary" onclick="calcularProposta()">🧮 Calcular Proposta</button>
+                <button class="btn btn-secondary" onclick="novaProposta()">🔄 Nova Proposta</button>
+            </div>
+
+            <section id="visao-geral-resultados" style="display: none;">
+                <h2>📊 Resultados</h2>
+                <div class="card-container">
+                    <div class="card investimento-total">
+                        <span class="card-icon">💰</span>
+                        <h3>Investimento Total</h3>
+                        <p id="res-investimento" class="valor-principal">R$ 0,00</p>
+                    </div>
+                    <div class="card economia-mensal">
+                        <span class="card-icon">⚡</span>
+                        <h3>Economia Mensal</h3>
+                        <p id="res-economia-mensal" class="valor-principal">R$ 0,00</p>
+                    </div>
+                    <div class="card payback-estimado">
+                        <span class="card-icon">⏳</span>
+                        <h3>Payback</h3>
+                        <p id="res-payback" class="valor-principal">0 Anos</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const hoje = new Date().toISOString().split('T')[0];
+            document.getElementById('data-proposta').value = hoje;
+        });
+    </script>
+</body>
+</html>
