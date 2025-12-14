@@ -74,3 +74,12 @@ relatorios/
 *.rar
 *.7z
 *.tar.gz
+
+# Deployment files
+.deploy-timestamp
+.vercel
+.netlify
+
+# Test results
+test-results/
+*.test.log

@@ -109,14 +109,22 @@ const SUPABASE_ANON_KEY = 'sua-chave-publica';
 Abra o arquivo `index.html` em um navegador ou utilize um servidor HTTP local:
 
 ```bash
-# Python 3
+# Usando npm scripts (recomendado)
+npm start
+
+# Usando script bash
+sh scripts/start.sh
+
+# Python 3 (alternativa)
 python3 -m http.server 8080
 
-# Node.js (com http-server)
-npx http-server -p 8080
+# Node.js (alternativa)
+npm run start:node
 ```
 
 Acesse: `http://localhost:8080`
+
+> 💡 **Dica**: Para deploy em produção, consulte o guia completo em [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ### 4. Gerar Propostas
 
@@ -198,6 +206,34 @@ Todos os parâmetros técnicos e financeiros podem ser ajustados na tabela `para
 - Taxa de inflação energética anual
 - Modelos de equipamentos
 - Validade da proposta (dias)
+
+## 🛠️ Scripts Disponíveis
+
+O projeto inclui vários scripts npm para facilitar o desenvolvimento:
+
+```bash
+# Iniciar servidor de desenvolvimento
+npm start
+
+# Validar sintaxe dos arquivos JavaScript
+npm run validate
+
+# Executar testes
+npm test
+
+# Preparar para deploy
+npm run deploy
+```
+
+Scripts bash também estão disponíveis:
+
+```bash
+# Iniciar servidor
+sh scripts/start.sh
+
+# Preparar deploy
+sh scripts/deploy.sh
+```
 
 ## 🐛 Solução de Problemas
 

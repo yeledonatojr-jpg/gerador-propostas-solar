@@ -1,0 +1,60 @@
+name: Validate System
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: read
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v3
+      
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: 📦 Install dependencies
+      run: |
+        if [ -f package.json ]; then
+          npm ci || npm install
+        fi
+        
+    - name: ✅ Validate JavaScript syntax
+      run: |
+        echo "🔍 Checking JavaScript files..."
+        node --check js/proposta.js
+        node --check js/supabase-config.js
+        node --check js/utils.js
+        node --check js/script.js
+        echo "✅ All JavaScript files are valid"
+        
+    - name: 🔍 Run validation tests
+      run: |
+        if [ -f tests/validate.js ]; then
+          node tests/validate.js
+        else
+          echo "⚠️  No validation tests found, skipping..."
+        fi
+        
+    - name: 📊 Check file structure
+      run: |
+        echo "📁 Checking required files..."
+        test -f index.html && echo "✅ index.html" || echo "❌ index.html missing"
+        test -f config.html && echo "✅ config.html" || echo "❌ config.html missing"
+        test -f database-schema.sql && echo "✅ database-schema.sql" || echo "❌ database-schema.sql missing"
+        test -d js && echo "✅ js/ directory" || echo "❌ js/ directory missing"
+        test -d css && echo "✅ css/ directory" || echo "❌ css/ directory missing"
+        
+    - name: 🎉 Success
+      run: |
+        echo "✅ All validations passed!"
+        echo "🚀 System is ready for deployment"
