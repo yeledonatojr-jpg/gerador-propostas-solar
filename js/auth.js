@@ -19,7 +19,7 @@ async function fazerLogin() {
     }
     
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
             email: email,
             password: senha
         });
@@ -42,7 +42,7 @@ async function fazerLogin() {
 // Fazer logout
 async function fazerLogout() {
     try {
-        const { error } = await supabase.auth.signOut();
+        const { error } = await supabaseClient.auth.signOut();
         
         if (error) throw error;
         
