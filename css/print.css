@@ -75,13 +75,13 @@
         font-size: 2rem;
     }
 
-    .card . valor-principal {
+    .card .valor-principal {
         font-size: 1.5rem;
         font-weight: bold;
     }
 
     /* Forçar cores dos cards */
-    .card. investimento-total {
+    .card.investimento-total {
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
     }
 
@@ -93,7 +93,7 @@
         background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
     }
 
-    .card. payback-estimado {
+    .card.payback-estimado {
         background: linear-gradient(135deg, #fa709a 0%, #fee140 100%) !important;
     }
 
@@ -172,7 +172,7 @@
     }
 
     /* Ocultar campos vazios na impressão */
-    input: empty,
+    input:empty,
     select:empty {
         border: none;
     }
@@ -185,7 +185,7 @@
 @media print {
     /* Garantir que gráficos de fundo sejam impressos */
     * {
-        -webkit-print-color-adjust: exact!important;
+        -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
     }
 }
