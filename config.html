@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Configurações - Gerador de Propostas Solar</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚙️ Configurações do Sistema</h1>
+            <a href="index.html" class="btn-back">← Voltar ao Gerador</a>
+        </header>
+
+        <main>
+            <!-- Seção de Login -->
+            <section id="login-section" class="section">
+                <h2>🔐 Login</h2>
+                <p>Faça login para acessar suas configurações personalizadas.</p>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="email-login">E-mail:</label>
+                        <input type="email" id="email-login" placeholder="seu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="senha-login">Senha:</label>
+                        <input type="password" id="senha-login" placeholder="Sua senha">
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary" onclick="fazerLogin()">🔓 Entrar</button>
+                </div>
+
+                <div id="login-erro" style="display: none;"></div>
+            </section>
+
+            <!-- Formulário de Configurações (aparece após login) -->
+            <div id="config-form" style="display: none;">
+                
+                <!-- Dados da Empresa -->
+                <section class="section">
+                    <h2>🏢 Dados da Empresa</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cfg-nome-empresa">Nome da Empresa:</label>
+                            <input type="text" id="cfg-nome-empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-cnpj">CNPJ:</label>
+                            <input type="text" id="cfg-cnpj">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-telefone">Telefone:</label>
+                            <input type="tel" id="cfg-telefone">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-email">E-mail:</label>
+                            <input type="email" id="cfg-email">
+                        </div>
+                        <div class="form-group full-width">
+                            <label for="cfg-endereco">Endereço Completo:</label>
+                            <input type="text" id="cfg-endereco">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Parâmetros Técnicos -->
+                <section class="section">
+                    <h2>⚡ Parâmetros Técnicos</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cfg-fator-irradiacao">Fator de Irradiação (HSP):</label>
+                            <input type="number" id="cfg-fator-irradiacao" step="0.01" value="113">
+                            <small class="nota">Média de horas de sol pleno por mês na sua região</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-potencia-placa">Potência da Placa (Wp):</label>
+                            <input type="number" id="cfg-potencia-placa" step="1" value="625">
+                            <small class="nota">Potência padrão das placas que você utiliza</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-eficiencia-sistema">Eficiência do Sistema (%):</label>
+                            <input type="number" id="cfg-eficiencia-sistema" step="0.1" value="80">
+                            <small class="nota">Perdas típicas do sistema (cabos, inversor, sujeira)</small>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Parâmetros Financeiros -->
+                <section class="section">
+                    <h2>💰 Parâmetros Financeiros</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="cfg-preco-kwp-base">Preço Base por kWp (R$):</label>
+                            <input type="number" id="cfg-preco-kwp-base" step="0.01" value="2450">
+                            <small class="nota">Seu custo médio de instalação por kWp</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-tarifa-b-padrao">Tarifa Grupo B Padrão (R$/kWh):</label>
+                            <input type="number" id="cfg-tarifa-b-padrao" step="0.0001" value="0.95">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-tarifa-ponta-padrao">Tarifa Ponta Padrão (R$/kWh):</label>
+                            <input type="number" id="cfg-tarifa-ponta-padrao" step="0.0001" value="1.25">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-tarifa-fora-ponta-padrao">Tarifa Fora Ponta Padrão (R$/kWh):</label>
+                            <input type="number" id="cfg-tarifa-fora-ponta-padrao" step="0.0001" value="0.65">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-reajuste-anual">Reajuste Anual Estimado (%):</label>
+                            <input type="number" id="cfg-reajuste-anual" step="0.1" value="8. 5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cfg-taxa-juros">Taxa de Juros Mensal (%):</label>
+                            <input type="number" id="cfg-taxa-juros" step="0.01" value="1.49">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Kits Pré-Cadastrados -->
+                <section class="section">
+                    <h2>📦 Kits Pré-Cadastrados</h2>
+                    <p>Gerencie seus kits de energia solar pré-configurados.</p>
+                    
+                    <div id="kits-lista" class="kits-container">
+                        <p class="texto-vazio">Carregando kits...</p>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="mostrarFormularioKit()">➕ Adicionar Novo Kit</button>
+                    </div>
+
+                    <!-- Formulário de Novo Kit (oculto inicialmente) -->
+                    <div id="form-novo-kit" style="display: none; margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                        <h3>➕ Novo Kit</h3>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="kit-nome">Nome do Kit:  *</label>
+                                <input type="text" id="kit-nome" placeholder="Ex: Kit Residencial 5kWp">
+                            </div>
+                            <div class="form-group">
+                                <label for="kit-potencia">Potência (kWp): *</label>
+                                <input type="number" id="kit-potencia" step="0.01" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="kit-inversor">Modelo do Inversor: </label>
+                                <input type="text" id="kit-inversor" placeholder="Ex:  Growatt 5K">
+                            </div>
+                            <div class="form-group">
+                                <label for="kit-estrutura">Tipo de Estrutura: </label>
+                                <select id="kit-estrutura">
+                                    <option value="Fibrocimento">Fibrocimento</option>
+                                    <option value="Metálico">Metálico</option>
+                                    <option value="Laje">Laje</option>
+                                    <option value="Solo">Solo</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="kit-preco">Preço Total (R$): *</label>
+                                <input type="number" id="kit-preco" step="0.01" min="0">
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn btn-success" onclick="salvarKit()">💾 Salvar Kit</button>
+                            <button class="btn btn-secondary" onclick="cancelarFormularioKit()">❌ Cancelar</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Botões de Ação -->
+                <div class="action-buttons">
+                    <button class="btn btn-success" onclick="salvarConfiguracoes()">💾 Salvar Todas as Configurações</button>
+                    <button class="btn btn-secondary" onclick="fazerLogout()">🚪 Sair</button>
+                </div>
+
+                <div id="config-mensagem" style="display: none; margin-top: 20px;"></div>
+
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>🌞 Gerador de Propostas Solar - Sistema de Configurações</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
