@@ -69,7 +69,7 @@ async function carregarConfiguracoes() {
     try {
         const user = await obterUsuarioAtual();
         
-        if (! user) {
+        if (!user) {
             console.log('⚠️ Usuário não autenticado');
             return;
         }
@@ -298,7 +298,7 @@ async function salvarKit() {
 
 // Excluir kit
 async function excluirKit(kitId) {
-    if (! confirm('Tem certeza que deseja excluir este kit?')) return;
+    if (!confirm('Tem certeza que deseja excluir este kit?')) return;
     
     try {
         const { error } = await supabase

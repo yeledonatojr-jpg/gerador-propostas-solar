@@ -106,7 +106,7 @@ function calcularProposta() {
             resultados = calcularGrupoB();
         }
         
-        if (! resultados) return;
+        if (!resultados) return;
         
         // Exibir resultados
         exibirResultados(resultados);
@@ -127,13 +127,13 @@ function calcularGrupoB() {
     const custoIluminacao = parseFloat(document.getElementById('custo-iluminacao').value) || 0;
     
     // Validações
-    if (! consumoTotal || consumoTotal <= 0) {
+    if (!consumoTotal || consumoTotal <= 0) {
         alert('⚠️ Por favor, informe o consumo total mensal.');
         document.getElementById('consumo-total').focus();
         return null;
     }
     
-    if (! tarifaConsumo || tarifaConsumo <= 0) {
+    if (!tarifaConsumo || tarifaConsumo <= 0) {
         alert('⚠️ Por favor, informe a tarifa de consumo.');
         document.getElementById('tarifa-consumo').focus();
         return null;
@@ -195,7 +195,7 @@ function calcularGrupoA() {
     const tarifaDemanda = parseFloat(document.getElementById('tarifa-demanda').value) || 0;
     
     // Validações
-    if (!consumoPonta || ! consumoForaPonta) {
+    if (!consumoPonta || !consumoForaPonta) {
         alert('⚠️ Por favor, informe o consumo ponta e fora ponta.');
         return null;
     }
@@ -243,7 +243,7 @@ function calcularGrupoA() {
     
     return {
         grupoTarifario: document.getElementById('grupo-tarifario').options[document.getElementById('grupo-tarifario').selectedIndex].text,
-        potenciaKwp:  potenciaReal,
+        potenciaKwp: potenciaReal,
         quantidadePlacas: quantidadePlacas,
         investimentoTotal: investimentoTotal,
         economiaMensal: economiaMensal,
