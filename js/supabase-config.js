@@ -12,8 +12,8 @@ let supabase;
 // Função para inicializar o Supabase
 function initSupabase() {
     try {
-        if (typeof window. supabase === 'undefined') {
-            console.error('❌ Biblioteca do Supabase não carregada! ');
+        if (typeof window.supabase === 'undefined') {
+            console.error('❌ Biblioteca do Supabase não carregada!');
             return false;
         }
 
@@ -40,7 +40,7 @@ if (typeof window !== 'undefined') {
 // Verificar se o usuário está autenticado
 async function verificarAutenticacao() {
     try {
-        const { data:  { session } } = await supabase. auth.getSession();
+        const { data: { session } } = await supabase.auth.getSession();
         return session;
     } catch (error) {
         console.error('Erro ao verificar autenticação:', error);

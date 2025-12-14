@@ -5,8 +5,8 @@
 @media print {
     
     /* Remover elementos não necessários */
-    . no-print,
-    .header . btn-config,
+    .no-print,
+    .header .btn-config,
     .action-buttons,
     .desconto-section,
     .footer {
@@ -15,9 +15,9 @@
 
     /* Ajustes gerais */
     body {
-        background:  white;
+        background: white;
         padding: 0;
-        margin:  0;
+        margin: 0;
         font-size: 12pt;
     }
 
@@ -35,7 +35,7 @@
         margin-bottom: 25px;
     }
 
-    . header h1 {
+    .header h1 {
         font-size: 24pt;
         color: #007bff;
     }
@@ -44,11 +44,11 @@
     .section {
         page-break-inside: avoid;
         margin-bottom: 20px;
-        border:  1px solid #dee2e6;
+        border: 1px solid #dee2e6;
         padding: 15px;
     }
 
-    . section h2 {
+    .section h2 {
         font-size: 16pt;
         color: #007bff;
         margin-bottom: 15px;
@@ -64,15 +64,15 @@
 
     .card {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        -webkit-print-color-adjust:  exact;
+        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
         color: white !important;
         padding: 15px;
-        border-radius:  8px;
+        border-radius: 8px;
     }
 
     .card-icon {
-        font-size:  2rem;
+        font-size: 2rem;
     }
 
     .card . valor-principal {
@@ -85,7 +85,7 @@
         background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
     }
 
-    . card.economia-mensal {
+    .card.economia-mensal {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%) !important;
     }
 
@@ -101,9 +101,9 @@
     .detalhes-tecnicos {
         page-break-inside: avoid;
         background: #f8f9fa;
-        -webkit-print-color-adjust:  exact;
+        -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
-        padding:  15px;
+        padding: 15px;
         border-radius: 8px;
     }
 
@@ -113,10 +113,10 @@
     }
 
     .tabela-detalhes tr {
-        border-bottom:  1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
     }
 
-    . tabela-detalhes td {
+    .tabela-detalhes td {
         padding: 10px;
     }
 
@@ -163,7 +163,7 @@
     .form-group,
     .detalhes-tecnicos,
     table tr {
-        page-break-inside:  avoid;
+        page-break-inside: avoid;
     }
 
     /* Melhorar contraste para impressão */
@@ -185,7 +185,7 @@
 @media print {
     /* Garantir que gráficos de fundo sejam impressos */
     * {
-        -webkit-print-color-adjust:  exact ! important;
+        -webkit-print-color-adjust: exact!important;
         print-color-adjust: exact !important;
     }
 }
