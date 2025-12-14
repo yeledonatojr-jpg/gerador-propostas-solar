@@ -18,3 +18,4 @@ Sistema completo para geração de propostas comerciais de energia solar com cá
 4. Acesse o sistema e comece a gerar propostas!
 
 ## 📁 Estrutura
+ 
